@@ -77,7 +77,6 @@
     "jasmine-core": "~5.8.0",
     "jest": "^30.0.2",
     "jest-environment-node": "^30.0.2",
-    "jest-preset-angular": "^16.0.0",
     "jest-util": "^30.0.2",
     "jsonc-eslint-parser": "^2.1.0",
     "karma": "~6.4.0",

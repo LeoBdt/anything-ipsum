@@ -2,7 +2,7 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [master]  # Le projet utilise 'master' comme branche principale
+    branches: [master]
   pull_request:
     branches: [master]
 
@@ -21,7 +21,23 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       
-      - name: Run tests
-        run: npm test
+      - name: Build application
+        run: npm run build:prod
+      
+      - name: Start server and run tests
+        run: |
+          # Démarrer le serveur en arrière-plan
+          npm run serve:ssr:anything-ipsum &
+          
+          # Attendre que le serveur démarre
+          echo "Waiting for server to start..."
+          sleep 5
+          
+          # Lancer les tests
+          npm test
+        env:
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          PORT: 4000
+          API_URL: http://localhost:4000
